@@ -29,6 +29,7 @@ class App extends React.Component {
     //then set state to all markets
     //map shoul load (this includes scroll bar)
   }
+// maybe because we have multiple inputs, we want something that will handle an input and then do a componentDidUpdate
 
   findByZip(){
     //take user input zipcode
