@@ -1,39 +1,34 @@
+require('dotenv').config();
+
+process.env.ENV = process.env.ENV || 'dev';
+
+const path = require('path');
 const express = require('express');
-const app = express();
+const webpack = require('webpack');
+const webpackMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.config');
+const app = require('./app/app');
 
-const bodyParser = require('body-parser');
-
-const Market = require('./service/markets.js');
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-app.get('/api/markets', (request, response) => {
-  Market.all().then((markets) => {
-    reponse.status(200).send(markets);
+if (process.env.ENV === 'dev') {
+  const compiler = webpack(config);
+  const middleware = webpackMiddleware(compiler, {
+    stats: {
+      colors: true,
+      chunks: false,
+    },
   });
+
+  app.use(middleware);
+  app.use(webpackHotMiddleware(compiler));
+}
+
+app.use(express.static(path.join(__dirname, '/dist')));
+app.get('/', (request, response) => {
+  response.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.get('/api/markets/:id', (request, response) => {
-  const id = request.params.id;
-  Market.find(id).then((market) => {
-    response.status(200).send(market);
-  });
-});
-app.delete('/api/markets/:id', (request, response) => {
-  const id = request.params.id;
-  Market.destroy(id).then(() => {
-    response.status(204).send({ message: 'market destroyed' });
-  });
-});
-
-app.post('/api/markets', (request, response) => {
-  const marketDetails = request.body;
-  Market.create(marketDetails).then((market) => {
-    response.status(200).send(market);
-  });
-});
-
-app.listen(8080, () => {
-  console.log('listening on 8080');
+const port = process.env.PORT;
+app.listen(port, () => {
+  console.log(`LISTENING on Port ${port}`);
 });

@@ -1,7 +1,29 @@
 body {
-  background-color: pink;
+  background-color: white;
+  width: 100%;
 }
 
-#app {
+#title {
+  width: 100%;
+  text-align: center;
+}
+
+#map {
+  display: flex;
+  margin-left: 2rem;
+}
+
+#scroll {
+  width: 20rem;
+  float:right;
+  height: 20rem;
+  overflow: hidden;
+  overflow-y: scroll;
+  margin-right: 2rem;
+}
+#format {
+  margin-left: 1rem;
+}
+button {
   background-color: white;
 }
