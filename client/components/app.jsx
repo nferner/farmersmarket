@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
     this.state ={
       markets: [],
-    }
+    };
   }
   componentDidMount() {
     request.get('/api/markets')
@@ -26,7 +26,6 @@ class App extends React.Component {
           <div id='format'>
             <h3>
               <a href={market.link}>{market.market}</a></h3>
-              <button onClick={this.onClick} type="button">Find Me</button>
             <p>{market.address}, {market.city}, NY {market.zip}</p>
             <p>{market.hours}</p>
             <p>{market.season}</p>
