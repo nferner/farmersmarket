@@ -6,13 +6,11 @@ class FindMarket extends React.Component{
     super(props);
   }
 
-  findByZip(){
+  findByZip(zip){
     //cycle through the matrix
     //find markets with zipcode exactly equal to the number inputted by the user
     //set the state equal to the indexes that have same zip code
     //maybe this should be in app.js
-
-
   }
 
 }
